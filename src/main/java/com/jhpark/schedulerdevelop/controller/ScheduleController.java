@@ -18,9 +18,9 @@ import java.util.List;
 public class ScheduleController {
     private final ScheduleService scheduleService;
 
-    @PostMapping
-    public ResponseEntity<ScheduleResponseDto> save(@RequestBody ScheduleRequestDto dto) {
-        ScheduleResponseDto scheduleResponseDto = scheduleService.save(dto.getTitle(), dto.getContents());
+    @PostMapping("/{id}")
+    public ResponseEntity<ScheduleResponseDto> save(@PathVariable Long id, @RequestBody ScheduleRequestDto dto) {
+        ScheduleResponseDto scheduleResponseDto = scheduleService.save(dto.getTitle(), dto.getContents(), id);
         return new ResponseEntity<>(scheduleResponseDto, HttpStatus.CREATED);
     }
 

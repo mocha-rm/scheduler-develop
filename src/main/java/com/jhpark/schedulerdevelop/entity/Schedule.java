@@ -24,11 +24,15 @@ public class Schedule extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Transient
+    private String username;
 
-    public Schedule(String title, String contents) {
 
+    public Schedule(String title, String contents, User user) {
         this.title = title;
         this.contents = contents;
+        this.user = user;
+        this.username = user.getName();
     }
 
     public Schedule() {
