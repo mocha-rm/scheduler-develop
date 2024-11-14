@@ -28,4 +28,16 @@ public class UserController {
         List<UserResponseDto> allUsers = userService.findAll();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponseDto> findById(@PathVariable Long id) {
+        UserResponseDto findUser = userService.findById(id);
+        return new ResponseEntity<>(findUser, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        userService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

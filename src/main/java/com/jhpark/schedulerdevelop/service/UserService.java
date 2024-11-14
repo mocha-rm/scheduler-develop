@@ -27,4 +27,13 @@ public class UserService {
                 .map(user -> new UserResponseDto(user.getId(), user.getName(), user.getEmail()))
                 .collect(Collectors.toList());
     }
+
+    public UserResponseDto findById(Long id) {
+        User findUser = userRepository.findByIdOrElseThrow(id);
+        return new UserResponseDto(findUser.getId(), findUser.getName(), findUser.getEmail());
+    }
+
+    public void delete(Long id) {
+        userRepository.delete(userRepository.findByIdOrElseThrow(id));
+    }
 }
