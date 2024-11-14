@@ -20,6 +20,10 @@ public class Schedule extends BaseEntity {
     @Column(nullable = false, length = 200)
     private String contents;
 
+    @ManyToOne // 유저 한명이 여러개의 일정을 가질 수 있다.
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
     public Schedule(String title, String contents) {
 
