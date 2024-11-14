@@ -3,6 +3,7 @@ package com.jhpark.schedulerdevelop.controller;
 import com.jhpark.schedulerdevelop.dto.user.UserRequestDto;
 import com.jhpark.schedulerdevelop.dto.user.UserResponseDto;
 import com.jhpark.schedulerdevelop.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> save(@RequestBody UserRequestDto dto) {
+    public ResponseEntity<UserResponseDto> save(@RequestBody @Valid UserRequestDto dto) {
         UserResponseDto userResponseDto = userService.save(dto.getName(), dto.getEmail(), dto.getPassword());
         return new ResponseEntity<>(userResponseDto, HttpStatus.CREATED);
     }
