@@ -6,6 +6,9 @@ import com.jhpark.schedulerdevelop.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class ScheduleService {
@@ -17,5 +20,25 @@ public class ScheduleService {
         scheduleRepository.save(savedSchedule);
 
         return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents());
+    }
+
+    public List<ScheduleResponseDto> findAll() {
+        List<Schedule> all = scheduleRepository.findAll();
+        return all.stream()
+                .map(schedule -> new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContents()))
+                .collect(Collectors.toList());
+    }
+
+    public ScheduleResponseDto findById(Long id) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
+    }
+
+    public ScheduleResponseDto update(Long id, String title, String contents) {
+        Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
+        findSchedule.updateSchedule(title, contents);
+        scheduleRepository.save(findSchedule);
+
+        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents());
     }
 }
