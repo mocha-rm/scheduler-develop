@@ -1,5 +1,6 @@
 package com.jhpark.schedulerdevelop.service;
 
+import com.jhpark.schedulerdevelop.config.PasswordEncoder;
 import com.jhpark.schedulerdevelop.dto.user.LoginResponseDto;
 import com.jhpark.schedulerdevelop.dto.user.UserResponseDto;
 import com.jhpark.schedulerdevelop.entity.User;
@@ -16,9 +17,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponseDto save(String name, String email, String password) {
-        User newUser = new User(name, email, password);
+        String encodedPassword = passwordEncoder.encode(password);
+
+        User newUser = new User(name, email, encodedPassword);
         userRepository.save(newUser);
 
         return new UserResponseDto(newUser.getId(), newUser.getName(), newUser.getEmail());
@@ -43,7 +47,7 @@ public class UserService {
     public LoginResponseDto authenticate(String email, String password) {
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "잘못된 이메일 입니다."));
 
-        if (!user.getPassword().equals(password)) {
+        if(!passwordEncoder.matches(password, user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다");
         }
 
