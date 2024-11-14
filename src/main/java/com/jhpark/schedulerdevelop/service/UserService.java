@@ -1,10 +1,13 @@
 package com.jhpark.schedulerdevelop.service;
 
+import com.jhpark.schedulerdevelop.dto.user.LoginResponseDto;
 import com.jhpark.schedulerdevelop.dto.user.UserResponseDto;
 import com.jhpark.schedulerdevelop.entity.User;
 import com.jhpark.schedulerdevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,8 +17,8 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserResponseDto save(String name, String email) {
-        User newUser = new User(name, email);
+    public UserResponseDto save(String name, String email, String password) {
+        User newUser = new User(name, email, password);
         userRepository.save(newUser);
 
         return new UserResponseDto(newUser.getId(), newUser.getName(), newUser.getEmail());
@@ -35,5 +38,15 @@ public class UserService {
 
     public void delete(Long id) {
         userRepository.delete(userRepository.findByIdOrElseThrow(id));
+    }
+
+    public LoginResponseDto authenticate(String email, String password) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "잘못된 이메일 입니다."));
+
+        if (!user.getPassword().equals(password)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다");
+        }
+
+        return new LoginResponseDto(user.getName(), user.getEmail(), "로그인 성공 !");
     }
 }

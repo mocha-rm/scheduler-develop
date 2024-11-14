@@ -2,7 +2,6 @@ package com.jhpark.schedulerdevelop.controller;
 
 import com.jhpark.schedulerdevelop.dto.schedule.ScheduleRequestDto;
 import com.jhpark.schedulerdevelop.dto.schedule.ScheduleResponseDto;
-import com.jhpark.schedulerdevelop.entity.Schedule;
 import com.jhpark.schedulerdevelop.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

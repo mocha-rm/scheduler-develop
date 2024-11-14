@@ -19,9 +19,13 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 40)
     private String email;
 
-    public User(String name, String email) {
+    @Column(nullable = false, length = 20)
+    private String password;
+
+    public User(String name, String email, String password) {
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     public User() {
