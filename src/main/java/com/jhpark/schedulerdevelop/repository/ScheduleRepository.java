@@ -1,6 +1,5 @@
 package com.jhpark.schedulerdevelop.repository;
 
-import com.jhpark.schedulerdevelop.dto.schedule.ScheduleResponseDto;
 import com.jhpark.schedulerdevelop.entity.Schedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
