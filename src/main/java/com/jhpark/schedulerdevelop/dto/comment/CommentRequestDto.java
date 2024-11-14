@@ -1,6 +1,5 @@
 package com.jhpark.schedulerdevelop.dto.comment;
 
-import com.jhpark.schedulerdevelop.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

@@ -6,7 +6,6 @@ import com.jhpark.schedulerdevelop.entity.User;
 import com.jhpark.schedulerdevelop.repository.ScheduleRepository;
 import com.jhpark.schedulerdevelop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
