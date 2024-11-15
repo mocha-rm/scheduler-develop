@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
     private final UserService userService;
 
+    /**
+     * 로그인
+     * @apiNote localhost:8080/login
+     * @param dto
+     * @param request
+     * @return ResponseEntity
+     */
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto dto, HttpServletRequest request) {
         LoginResponseDto loginResponseDto = userService.authenticate(dto.getEmail(), dto.getPassword());
@@ -26,6 +33,12 @@ public class LoginController {
         return new ResponseEntity<>(loginResponseDto, HttpStatus.OK);
     }
 
+    /**
+     * 로그아웃
+     * @apiNote localhost:8080/logout
+     * @param request
+     * @return ResponseEntity
+     */
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletRequest request) {
         HttpSession session = request.getSession(false);

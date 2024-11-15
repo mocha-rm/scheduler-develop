@@ -30,9 +30,9 @@ public class LoginFilter implements Filter {
     }
 
     /**
-     *
+     * FILTER_LIST 안에 있는 URI 와 requestURI 가 일치하면 true 불일치하면 false 반환
      * @param requestURI
-     * @return FILTER_LIST 안에 있는 URI 와 requestURI 가 일치하면 true 불일치하면 false 반환
+     * @return boolean
      */
     private boolean isFilterList(String requestURI) {
         return PatternMatchUtils.simpleMatch(FILTER_LIST, requestURI);
