@@ -28,14 +28,24 @@ public class CommentService {
         Comment comment = new Comment(contents, findUser, findSchedule);
         commentRepository.save(comment);
 
-        return new CommentResponseDto(comment.getId(), comment.getUser().getName(), comment.getContents());
+        return new CommentResponseDto(comment.getId(),
+                comment.getUser().getName(),
+                comment.getContents(),
+                comment.getCreatedDate(),
+                comment.getModDate()
+        );
     }
 
     public List<CommentResponseDto> findAll(Long id) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
         return commentRepository.findAllByScheduleId(findSchedule.getId())
                 .stream()
-                .map(comments -> new CommentResponseDto(comments.getId(), comments.getUser().getName(), comments.getContents()))
+                .map(comments -> new CommentResponseDto(comments.getId(),
+                        comments.getUser().getName(),
+                        comments.getContents(),
+                        comments.getCreatedDate(),
+                        comments.getModDate()
+                ))
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +54,12 @@ public class CommentService {
         findComment.updateComment(contents);
         commentRepository.save(findComment);
 
-        return new CommentResponseDto(findComment.getId(), findComment.getUser().getName(), findComment.getContents());
+        return new CommentResponseDto(findComment.getId(),
+                findComment.getUser().getName(),
+                findComment.getContents(),
+                findComment.getCreatedDate(),
+                findComment.getModDate()
+        );
     }
 
     public void delete(Long id) {

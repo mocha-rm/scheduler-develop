@@ -23,19 +23,37 @@ public class ScheduleService {
         Schedule savedSchedule = new Schedule(title, contents, user);
         scheduleRepository.save(savedSchedule);
 
-        return new ScheduleResponseDto(savedSchedule.getId(), savedSchedule.getTitle(), savedSchedule.getContents(), savedSchedule.getUsername());
+        return new ScheduleResponseDto(savedSchedule.getId(),
+                savedSchedule.getTitle(),
+                savedSchedule.getContents(),
+                savedSchedule.getUsername(),
+                savedSchedule.getCreatedDate(),
+                savedSchedule.getModDate()
+        );
     }
 
     public List<ScheduleResponseDto> findAll() {
         List<Schedule> all = scheduleRepository.findAll();
         return all.stream()
-                .map(schedule -> new ScheduleResponseDto(schedule.getId(), schedule.getTitle(), schedule.getContents(), schedule.getUser().getName()))
+                .map(schedule -> new ScheduleResponseDto(schedule.getId(),
+                        schedule.getTitle(),
+                        schedule.getContents(),
+                        schedule.getUser().getName(),
+                        schedule.getCreatedDate(),
+                        schedule.getModDate()
+                ))
                 .collect(Collectors.toList());
     }
 
     public ScheduleResponseDto findById(Long id) {
         Schedule findSchedule = scheduleRepository.findByIdOrElseThrow(id);
-        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents(), findSchedule.getUser().getName());
+        return new ScheduleResponseDto(findSchedule.getId(),
+                findSchedule.getTitle(),
+                findSchedule.getContents(),
+                findSchedule.getUser().getName(),
+                findSchedule.getCreatedDate(),
+                findSchedule.getCreatedDate()
+        );
     }
 
     public ScheduleResponseDto update(Long id, String title, String contents) {
@@ -43,7 +61,13 @@ public class ScheduleService {
         findSchedule.updateSchedule(title, contents);
         scheduleRepository.save(findSchedule);
 
-        return new ScheduleResponseDto(findSchedule.getId(), findSchedule.getTitle(), findSchedule.getContents(), findSchedule.getUser().getName());
+        return new ScheduleResponseDto(findSchedule.getId(),
+                findSchedule.getTitle(),
+                findSchedule.getContents(),
+                findSchedule.getUser().getName(),
+                findSchedule.getCreatedDate(),
+                findSchedule.getModDate()
+        );
     }
 
     public void delete(Long id) {
